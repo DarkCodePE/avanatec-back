@@ -1,11 +1,14 @@
 package com.peterson.helpdesk.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.peterson.helpdesk.domain.enums.Prioridade;
 import com.peterson.helpdesk.domain.enums.Status;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -20,7 +23,6 @@ public class Chamado {
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataFechamento;
 
-
     private Prioridade prioridade;
     private Status status;
     private String titulo;
@@ -33,6 +35,14 @@ public class Chamado {
     @ManyToOne
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
+
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "chamado")
+    private List<Solution> solutions = new ArrayList<>();
 
     public Chamado() {
         super();
@@ -119,6 +129,22 @@ public class Chamado {
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public List<Solution> getSolutions() {
+        return solutions;
+    }
+
+    public void setSolutions(List<Solution> solutions) {
+        this.solutions = solutions;
     }
 
     @Override
