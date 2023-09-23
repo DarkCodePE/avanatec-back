@@ -2,14 +2,12 @@ package com.peterson.helpdesk.services;
 
 import com.peterson.helpdesk.domain.Chamado;
 import com.peterson.helpdesk.domain.Cliente;
+import com.peterson.helpdesk.domain.ProductCategory;
 import com.peterson.helpdesk.domain.Tecnico;
 import com.peterson.helpdesk.domain.enums.Perfil;
 import com.peterson.helpdesk.domain.enums.Prioridade;
 import com.peterson.helpdesk.domain.enums.Status;
-import com.peterson.helpdesk.repositories.ChamadoRepository;
-import com.peterson.helpdesk.repositories.ClienteRepository;
-import com.peterson.helpdesk.repositories.PessoaRepository;
-import com.peterson.helpdesk.repositories.TecnicoRepository;
+import com.peterson.helpdesk.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -24,9 +22,17 @@ public class DBService {
     @Autowired
     private PessoaRepository pessoaRepository;
     @Autowired
+    private ProductCategoryRepository productCategoryRepository;
+    @Autowired
     private BCryptPasswordEncoder encoder;
 
     public void instanciaDB() {
+        ProductCategory productCategory = new ProductCategory();
+        productCategory.setId(1);
+        productCategory.setName("Micrófonos y sonido");
+        ProductCategory productCategory2 = new ProductCategory();
+        productCategory2.setId(2);
+        productCategory2.setName("Adaptadores Hub");
 
         Tecnico tec1 = new Tecnico(null, "Valdir Cezar", "550.482.150-95", "valdir@gmail.com", encoder.encode("123"));
         tec1.addPerfil(Perfil.ADMIN);
@@ -51,5 +57,6 @@ public class DBService {
 
         pessoaRepository.saveAll(Arrays.asList(tec1, tec2, tec3, tec4, tec5, cli1, cli2, cli3, cli4, cli5));
         chamadoRepository.saveAll(Arrays.asList(c1, c2, c3, c4, c5, c6));
+        productCategoryRepository.saveAll(Arrays.asList(productCategory, productCategory2));
     }
 }

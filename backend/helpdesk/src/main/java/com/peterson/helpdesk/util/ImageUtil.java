@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.io.ByteArrayOutputStream;
+import java.util.Base64;
 import java.util.zip.Deflater;
 import java.util.zip.Inflater;
 public class ImageUtil {
@@ -41,5 +42,12 @@ public class ImageUtil {
         } catch (Exception exception) {
         }
         return outputStream.toByteArray();
+    }
+
+    public static String decompressImageBase64(byte[] data) {
+        return new String(Base64.getDecoder().decode(data));
+    }
+    public static String compressImageBase64(byte[] data) {
+        return Base64.getEncoder().encodeToString(data);
     }
 }

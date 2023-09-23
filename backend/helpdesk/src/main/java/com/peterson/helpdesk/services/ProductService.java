@@ -3,6 +3,7 @@ package com.peterson.helpdesk.services;
 import com.peterson.helpdesk.domain.Image;
 import com.peterson.helpdesk.domain.Product;
 import com.peterson.helpdesk.domain.ProductCategory;
+import com.peterson.helpdesk.domain.dtos.ProductListDTO;
 import com.peterson.helpdesk.domain.dtos.ProductRequestDTO;
 import com.peterson.helpdesk.repositories.ImageRepository;
 import com.peterson.helpdesk.repositories.ProductCategoryRepository;
@@ -17,8 +18,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j(topic = "PRODUCT_SERVICE")
@@ -32,8 +35,15 @@ public class ProductService extends BaseService<Product, Integer, ProductReposit
         this.productRepository = productRepository;
         this.imageRepository = imageRepository;
     }
-    public List<Product> products() {
-        return productRepository.findAll();
+    public List<ProductListDTO> products() {
+        return productRepository.findAll().stream().map(productDB -> {
+           return ProductListDTO.builder()
+                   .categoryName(productDB.getCategory().getName())
+                   .title(productDB.getTitle())
+                   .sku(productDB.getSku())
+                   .summary(productDB.getSummary())
+                   .imageUrl(ImageUtil.compressImageBase64(ImageUtil.decompressImage(productDB.getImage().getImageData()))).build();
+        }).toList();
     }
     /**
      * Finds a user in the database by sku
@@ -41,10 +51,11 @@ public class ProductService extends BaseService<Product, Integer, ProductReposit
     public Optional<Product> findBySku(String sku) {
         return repository.findBySku(sku);
     }
-    @Transactional
-    public List<Product> createOrUpdateProduct(ProductRequestDTO productDTO, MultipartFile file) throws IOException {
+
+    public List<ProductListDTO> createOrUpdateProduct(ProductRequestDTO productDTO, MultipartFile file) throws IOException {
+        log.info("productDTO.getCategoryId(), {}", productDTO.getCategoryId());
         ProductCategory productCategory =
-                productCategoryRepository.findById(productDTO.getProductCategoryId()).orElseThrow(() -> new NoSuchElementFoundException("item.absent", productDTO.getProductCategoryId()));
+                productCategoryRepository.findById(productDTO.getCategoryId()).orElseThrow(() -> new NoSuchElementFoundException("item.absent", productDTO.getCategoryId()));
         Product product = productRepository.findBySku(productDTO.getSku()).orElse(new Product());
         Image imageDB = null;
         if (file != null){
@@ -66,7 +77,17 @@ public class ProductService extends BaseService<Product, Integer, ProductReposit
         product.setSummary(productDTO.getSummary());
         product.setStatus(true);
         productRepository.save(product);
-        return productRepository.findAll();
+        List<ProductListDTO> response = new ArrayList<>();
+        productRepository.findAll().forEach(productDB -> {
+           response.add(ProductListDTO.builder()
+                   .categoryName(productDB.getCategory().getName())
+                   .title(productDB.getTitle())
+                   .sku(productDB.getSku())
+                   .summary(productDB.getSummary())
+                   .imageUrl(ImageUtil.compressImageBase64(ImageUtil.decompressImage(productDB.getImage().getImageData())))
+                   .build());
+        });
+        return response;
     }
 
     @Transactional

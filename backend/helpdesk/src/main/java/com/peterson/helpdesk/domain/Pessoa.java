@@ -14,6 +14,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity()
+@Table(name = "personas")
 public abstract class Pessoa implements Serializable {
 
     @Serial

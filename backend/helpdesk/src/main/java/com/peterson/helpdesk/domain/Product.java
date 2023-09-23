@@ -34,7 +34,7 @@ public class Product {
     private String summary;
 
     @Column(name = "PRICE")
-    @NotBlank(message = "Price summary can not be blank")
+    //@NotBlank(message = "Price summary can not be blank")
     private float price;
 
     @Column(name = "STATUS")

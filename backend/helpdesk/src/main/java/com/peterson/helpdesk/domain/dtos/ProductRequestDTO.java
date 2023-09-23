@@ -19,7 +19,4 @@ public class ProductRequestDTO {
     private String title;
     private Integer categoryId;
     private String summary;
-    private String imageName;
-    private String type;
-    private Integer productCategoryId;
 }

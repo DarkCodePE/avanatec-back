@@ -3,6 +3,7 @@ package com.peterson.helpdesk.services;
 
 import com.peterson.helpdesk.domain.Chamado;
 import com.peterson.helpdesk.domain.Cliente;
+import com.peterson.helpdesk.domain.Product;
 import com.peterson.helpdesk.domain.Tecnico;
 import com.peterson.helpdesk.domain.dtos.ChamadoDTO;
 import com.peterson.helpdesk.domain.enums.Prioridade;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
+import java.nio.file.LinkOption;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -26,7 +28,8 @@ public class ChamadoService {
     private TecnicoService tecnicoService;
     @Autowired
     private ClienteService clienteService;
-
+    @Autowired
+    private ProductService productService;
     public Chamado findById(Integer id) {
         Optional<Chamado> obj = repository.findById(id);
         return obj.orElseThrow(() -> new ObjectnotFoundException("Objeto não encontrado! ID: " + id));
@@ -51,7 +54,7 @@ public class ChamadoService {
     private Chamado newChamado(ChamadoDTO obj) {
         Tecnico tecnico = tecnicoService.findById(obj.getTecnico());
         Cliente cliente = clienteService.findById(obj.getCliente());
-
+        Product product = productService.findBySku(obj.getProductId()).orElseThrow(() -> new RuntimeException("NO EXISTE PRODUCTO"));
         Chamado chamado = new Chamado();
         if(obj.getId() != null) {
             chamado.setId(obj.getId());
@@ -67,6 +70,7 @@ public class ChamadoService {
         chamado.setStatus(Status.toEnum(obj.getStatus()));
         chamado.setTitulo(obj.getTitulo());
         chamado.setObservacoes(obj.getObservacoes());
+        chamado.setProduct(product);
         return chamado;
     }
 }

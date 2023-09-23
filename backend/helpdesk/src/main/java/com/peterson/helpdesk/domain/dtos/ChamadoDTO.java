@@ -33,7 +33,7 @@ public class ChamadoDTO {
     private Integer cliente;
     private String nomeTecnico;
     private String nomeCliente;
-
+    private String productId;
     public ChamadoDTO() {
         super();
     }
@@ -58,6 +58,14 @@ public class ChamadoDTO {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getProductId() {
+        return productId;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
     }
 
     public LocalDate getDataAbertura() {
