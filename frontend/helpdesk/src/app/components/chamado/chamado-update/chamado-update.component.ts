@@ -24,8 +24,8 @@ export class ChamadoUpdateComponent implements OnInit {
     tecnico: '',
     cliente: '',
     nomeCliente: '',
-    nomeTecnico: ''
-
+    nomeTecnico: '',
+    productId: 0
   }
 
   clientes: Cliente[] = [];
@@ -68,7 +68,7 @@ export class ChamadoUpdateComponent implements OnInit {
   update(): void {
     this.chamadoService.update(this.chamado).subscribe({
       next: () => {
-      this.toastService.success('Chamado atualizado com sucesso', 'Atualizar chamado');
+      this.toastService.success('Ticket actualizado exitosamente', 'Actualizar ticket');
       this.router.navigate(['chamados']);
       },
     error: (erro) => {
@@ -100,21 +100,21 @@ export class ChamadoUpdateComponent implements OnInit {
 
   retornaStatus(status: any): string {
     if(status == '0') {
-      return 'ABERTO'
+      return 'ABIERTO'
     }
     else if(status == '1') {
-      return 'EM ANDAMENTO'
+      return 'EN PROCESO'
     } else {
-      return 'ENCERRADO'
+      return 'CERRADO'
     }
   }
 
   retornaPrioridade(prioridade: any): string {
     if(prioridade == '0') {
-      return 'BAIXA'
+      return 'BAJA'
     }
     else if(prioridade == '1') {
-      return 'MÉDIA'
+      return 'MEDIA'
     } else {
       return 'ALTA'
     }

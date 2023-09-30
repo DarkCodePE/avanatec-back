@@ -1,0 +1,20 @@
+
+<article class="card">
+    <a href="#">
+        <picture class="thumbnail">
+            <div class="wrap">
+                <img [src]="decodeImage(solution.imageUrl)" />
+            </div>
+        </picture>
+        <div class="card-content">
+            <h2>{{ solution.title }}</h2>
+            <p>{{ solution.summary}}</p>
+        </div><!-- .card-content -->
+        <div class="card-content">
+           <!-- <button color="primary" routerLink="producto">Ver soluciones</button>-->
+            <a class="btn-send" [routerLink]="['/soluciones/producto', solution.id]">
+                <span class="badge">Ver soluciones</span>
+            </a>
+        </div>
+    </a>
+</article><!-- .card -->

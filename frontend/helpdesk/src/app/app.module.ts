@@ -47,6 +47,17 @@ import { ChamadoListComponent } from './components/chamado/chamado-list/chamado-
 import { ChamadoCreateComponent } from './components/chamado/chamado-create/chamado-create.component';
 import { ChamadoUpdateComponent } from './components/chamado/chamado-update/chamado-update.component';
 import { ChartComponent } from './components/charts/chart/chart.component';
+import {ProductListComponent} from "./components/product/product-list/product-list.component";
+import { ProductCreateComponent } from './components/product/modal/product-create/product-create.component';
+import {MatDialogModule} from "@angular/material/dialog";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import { SolutionComponent } from './components/solution/solution.component';
+import { SolutionCardComponent } from './components/solution/solution-card/solution-card.component';
+import { SolutionDetailComponent } from './components/solution/solution-detail/solution-detail.component';
+import { LoaderComponent } from './components/loader/loader.component';
+import { SolutionListComponent } from './components/solution/solution-list/solution-list.component';
+import { SolutionGridComponent } from './components/solution/solution-grid/solution-grid.component';
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 @NgModule({
   declarations: [
@@ -66,7 +77,15 @@ import { ChartComponent } from './components/charts/chart/chart.component';
     ChamadoListComponent,
     ChamadoCreateComponent,
     ChamadoUpdateComponent,
-    ChartComponent
+    ChartComponent,
+    ProductListComponent,
+    ProductCreateComponent,
+    SolutionComponent,
+    SolutionCardComponent,
+    SolutionDetailComponent,
+    LoaderComponent,
+    SolutionListComponent,
+    SolutionGridComponent
   ],
   imports: [
     BrowserModule,
@@ -92,12 +111,17 @@ import { ChartComponent } from './components/charts/chart/chart.component';
     MatIconModule,
     MatListModule,
     MatCardModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
     ToastrModule.forRoot({
       timeOut: 4000,
       closeButton: true,
       progressBar: true
     }),
-    NgxMaskModule.forRoot()
+    NgxMaskModule.forRoot(),
+    MatDatepickerModule,
+    MatTooltipModule
   ],
   providers: [AuthInterceptorProvider],
   bootstrap: [AppComponent]

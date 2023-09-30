@@ -1,0 +1,20 @@
+<div class="job-item">
+    <a class="job-inner align-items-center"  [routerLink]="['/soluciones/detalle', ticket.id]">
+        <div class="job-inner-left">
+            <div class="title-job">
+        <span
+        ><mat-icon>note</mat-icon></span>
+                <div class="title font-bold">
+                    {{ ticket.titulo }}
+                </div>
+                <span>
+                  <span style="cursor: pointer;" >
+
+                  </span>
+                  <span  matTooltip="Me gusta" style="cursor: pointer;" >
+                  </span>
+                </span>
+            </div>
+        </div>
+    </a>
+</div>

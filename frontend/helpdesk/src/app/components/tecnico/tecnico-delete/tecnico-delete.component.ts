@@ -44,7 +44,7 @@ export class TecnicoDeleteComponent implements OnInit {
   delete(): void {
     this.service.delete(this.tecnico.id).subscribe({
       next: () => {
-        this.toast.success('Técnico deletado com sucesso', 'Delete');
+        this.toast.success('Tecnico eliminado con exito', 'Delete');
         this.router.navigate(['tecnicos']);
       },
       error: (erro) => {

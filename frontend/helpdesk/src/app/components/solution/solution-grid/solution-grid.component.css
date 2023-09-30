@@ -1,0 +1,10 @@
+.btn-send{
+    background: #484c7f;
+    padding: 10px;
+    border: 1px solid;
+    border-radius: 5px;
+}
+.ticket-container{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}

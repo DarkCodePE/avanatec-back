@@ -1,0 +1,22 @@
+<!--<div *ngIf="!loading" class="main">
+    <div *ngIf="ELEMENT_DATA.length!>0" class="job-test">
+        <app-solution-card
+                      *ngFor="let solution of ELEMENT_DATA; let i = index"
+                      [solution]="solution" ></app-solution-card>
+    </div>
+
+    <div style="display: flex;justify-content: center;" *ngIf="loading">
+        <app-loader
+                class="spinner" [class]="'loader-blue'"
+        ></app-loader>
+    </div>
+</div>-->
+<div class="container">
+    <h1>Catalogo de productos</h1>
+    <div class="wrapper">
+
+        <app-solution-list *ngFor="let solution of ELEMENT_DATA_PRODUCTS; let i = index"
+                           [solution]="solution" ></app-solution-list>
+
+    </div>
+</div>
